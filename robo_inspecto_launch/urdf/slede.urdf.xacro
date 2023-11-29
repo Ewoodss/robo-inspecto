@@ -1,30 +1,28 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="slede">
   <material name="blue">
-    <color rgba="0 0 0.8 0.5"/>
+    <color rgba="0 0 0.8 0.5" />
   </material>
 
-
   <xacro:macro name="sw_mesh_import" params="filename">
-    <mesh filename="package://robo_inspecto_launch/meshes/${filename}.STL" scale="0.001 0.001 0.001"/>
+    <mesh filename="package://robo_inspecto_launch/meshes/${filename}.STL" scale="0.001 0.001 0.001" />
   </xacro:macro>
 
   <xacro:macro name="sw_visual_import" params="filename length width height">
     <visual>
-      <origin rpy="${pi/2} 0 ${pi/2}" xyz="${-(length/2)} ${-(width/2)} ${-(height/2)}"  />
+      <origin rpy="${pi/2} 0 ${pi/2}" xyz="${-(length/2)} ${-(width/2)} 0" />
       <geometry>
-        <xacro:sw_mesh_import filename="${filename}"/>
+        <xacro:sw_mesh_import filename="${filename}" />
       </geometry>
     </visual>
   </xacro:macro>
 
 
-
-
   <xacro:property name="plate_width" value="0.3" />
   <xacro:property name="plate_thickness" value="0.015" />
   <link name="base_plate_link">
-    <xacro:sw_visual_import filename="slede" length="${plate_width}" width="${plate_width}" height="${plate_thickness}"/>
+    <xacro:sw_visual_import filename="slede" length="${plate_width}" width="${plate_width}"
+      height="${plate_thickness}" />
     <collision>
       <geometry>
         <box size="${plate_width} ${plate_width} ${plate_thickness}" />
@@ -32,31 +30,31 @@
     </collision>
   </link>
 
-  <xacro:property name="bearing_width" value="0.065" />
-  <xacro:property name="bearing_height" value="0.060" />
-  <xacro:property name="bearing_thickness" value="0.047" />
-  <link name="bearing">
-    <xacro:sw_visual_import filename="lager" length="${bearing_width}" width="${bearing_height}" height="${bearing_thickness}"/>
-    <collision>
-      <geometry>
-        <box size="${bearing_width} ${bearing_height} ${bearing_thickness}" />
-      </geometry>
-    </collision>
-  </link>
-  
-  <link name="base_link">
-  </link>
 
-  <joint name="base_to_base_plate" type="fixed">
-    <parent link="base_link"/>
-    <child link="base_plate_link"/>
-  </joint>
+  <xacro:macro name="bearing" params="prefix reflect_x reflect_y">
+    <xacro:property name="bearing_width" value="0.065" />
+    <xacro:property name="bearing_height" value="0.060" />
+    <xacro:property name="bearing_thickness" value="0.047" />
 
-  <joint name="base_plate_to_bearing" type="fixed">
-    <parent link="base_plate_link"/>
-    <child link="bearing"/>
-    <origin rpy="${pi} 0 0" xyz="0 0 0"/>
-  </joint>
+    <link name="${prefix}_bearing">
+      <visual>
+        <origin rpy="${-pi/2} 0 ${pi/2}" xyz="${(bearing_width/2)} ${(-bearing_height/2)} 0" />
+        <geometry>
+          <xacro:sw_mesh_import filename="lager" />
+        </geometry>
+      </visual>
+    </link>
 
+    <joint name="base_plate_to_${prefix}_bearing" type="fixed">
+      <parent link="base_plate_link" />
+      <child link="${prefix}_bearing" />
+      <origin
+        xyz="${(plate_width-bearing_width)/(2*reflect_x)} ${(plate_width-bearing_height)/(2*reflect_y)} 0" />
+    </joint>
+  </xacro:macro>
 
+  <xacro:bearing prefix="top_left" reflect_x="-1" reflect_y="1" />
+  <xacro:bearing prefix="top_right" reflect_x="1" reflect_y="1" />
+  <xacro:bearing prefix="bottom_left" reflect_x="-1" reflect_y="-1" />
+  <xacro:bearing prefix="bottom_right" reflect_x="1" reflect_y="-1" />
 </robot>
