@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="frame">
+
+<xacro:include filename="macro.urdf.xacro" />
+<link name="frame_link">
+    <xacro:property name="frame_length" value="1" />
+    <xacro:property name="frame_width" value="0.3" />
+    <xacro:property name="frame_height" value="0.12" />
+    <visual>
+        <origin rpy="0 0 ${pi/2}"/>
+        <geometry>
+            <mesh filename="package://robo_inspecto_launch/meshes/frame.stl"/>
+        </geometry>
+    </visual>
+    <collision>
+        <geometry>
+            <box size="${frame_length} ${frame_width} ${frame_height}" />
+        </geometry>
+    </collision>
+</link>
+
+<!-- link frame to base -->
+<link name="base_link">
+</link>
+
+<joint name="base_to_frame" type="fixed">
+    <parent link="base_link" />
+    <child link="frame_link" />
+    <origin xyz="0 0 0" />
+</joint>
+
+<xacro:include filename="slede.urdf.xacro" />
+
+<!-- connect slede to frame -->
+<joint name="frame_to_slede" type="fixed">
+    <parent link="frame_link" />
+    <child link="base_plate_link" />
+    <origin xyz="0 0 0.12" />
+</joint>
+
+</robot>

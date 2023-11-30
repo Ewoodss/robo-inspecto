@@ -5,7 +5,7 @@ find_package(ament_cmake REQUIRED)
 find_package(xacro REQUIRED)
 
 # compile xaacro files to urdf files in build directory
-file(GLOB xacro_files urdf/*.xacro)
+file(GLOB xacro_files CONFIGURE_DEPENDS urdf/*.xacro)
 
 foreach(xacro_file ${xacro_files})
   get_filename_component(xacro_filename ${xacro_file} NAME_WE)
