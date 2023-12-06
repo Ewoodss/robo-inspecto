@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="macro">
+    <xacro:include filename="slede.urdf.xacro" />
+    <xacro:include filename="frame.urdf.xacro" />
+
+    <!-- import ur5e -->
+    <xacro:include filename="$(find ur_description)/urdf/ur_macro.xacro" />
+
+    <xacro:ur_robot
+        name="ur"
+        tf_prefix="ur_"
+        parent="base_plate_link"
+        joint_limits_parameters_file="$(find ur_description)/config/ur5e/joint_limits.yaml"
+        kinematics_parameters_file="$(find ur_description)/config/ur5e/default_kinematics.yaml"
+        physical_parameters_file="$(find ur_description)/config/ur5e/physical_parameters.yaml"
+        visual_parameters_file="$(find ur_description)/config/ur5e/visual_parameters.yaml"
+        script_filename=""
+        output_recipe_filename=""
+        input_recipe_filename=""
+    ><origin xyz="0 0 0" rpy="0 0 0" />
+    </xacro:ur_robot>
+
+
+    <!-- connect slede to frame -->
+    <joint name="frame_to_slede" type="prismatic">
+        <parent link="base_link" />
+        <child link="base_plate_link" />
+        <origin xyz="${plate_width/2} 0 ${frame_height+plate_thickness}" />
+        <axis xyz="1 0 0" />
+        <limit lower="0" upper="${frame_length - plate_width}" effort="100" velocity="0.5" />
+    </joint>
+
+</robot>

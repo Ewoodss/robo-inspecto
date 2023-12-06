@@ -1,18 +1,24 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="slede">
   <xacro:include filename="macro.urdf.xacro" />
-
   <xacro:property name="plate_width" value="0.3" />
   <xacro:property name="plate_thickness" value="0.015" />
+
   <link name="base_plate_link">
     <xacro:sw_visual_import filename="slede" length="${plate_width}" width="${plate_width}"
       height="${plate_thickness}" />
     <collision>
+      <origin xyz="0 0 ${plate_thickness/2}" />
       <geometry>
         <box size="${plate_width} ${plate_width} ${plate_thickness}" />
       </geometry>
     </collision>
   </link>
+
+
+  <material name="dark_grey">
+    <color rgba="0.2 0.2 0.2 1" />
+  </material>
 
   <xacro:property name="bearing_width" value="0.065" />
   <xacro:property name="bearing_height" value="0.060" />
@@ -20,6 +26,7 @@
   <xacro:macro name="bearing" params="prefix reflect_x reflect_y">
     <link name="${prefix}_bearing">
       <visual>
+        <material name="dark_grey"/>
         <origin rpy="${-pi/2} 0 ${pi/2}" xyz="${(bearing_width/2)} ${(-bearing_height/2)} 0" />
         <geometry>
           <xacro:sw_mesh_import filename="lager" />
