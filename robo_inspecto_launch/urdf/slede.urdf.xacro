@@ -32,6 +32,12 @@
           <xacro:sw_mesh_import filename="lager" />
         </geometry>
       </visual>
+      <collision>
+        <origin xyz="0 0 ${-bearing_height/2}" />
+        <geometry>
+          <box size="${bearing_width} ${bearing_height} ${bearing_thickness}" />
+        </geometry>
+      </collision>
     </link>
 
     <joint name="base_plate_to_${prefix}_bearing" type="fixed">
