@@ -1,0 +1,9 @@
+<library path="robo_inspecto_hardware">
+  <class name="robo_inspecto_hardware/MotorHardware"
+         type="robo_inspecto_hardware::MotorHardware"
+         base_class_type="hardware_interface::ActuatorInterface">
+    <description>
+      ros2_control hardware interface.
+    </description>
+  </class>
+</library>

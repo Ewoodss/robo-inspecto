@@ -29,21 +29,17 @@ arm_controller:
       - ur_wrist_3_joint
     command_interfaces:
       - position
-      - effort
     state_interfaces:
       - position
       - velocity
-      - effort
 slede_controller:
   ros__parameters:
     joint: frame_to_slede
     command_interfaces:
       - position
-      - effort
     state_interfaces:
       - position
       - velocity
-      - effort
 robot_controller:
   ros__parameters:
     joints:
@@ -56,8 +52,6 @@ robot_controller:
       - ur_wrist_3_joint
     command_interfaces:
       - position
-      - effort
     state_interfaces:
       - position
       - velocity
-      - effort
