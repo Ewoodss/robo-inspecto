@@ -1,6 +1,13 @@
 import rclpy
+import numpy as np
+
 from rclpy.node import Node
 from sensor_msgs.msg import LaserScan
+from sensor_msgs.msg import PointCloud2
+from laser_geometry import LaserProjection
+
+
+
 
 class MyScanNode(Node):
     def __init__(self):
@@ -11,10 +18,27 @@ class MyScanNode(Node):
             'scan',
             self.scan_callback,
             10)
+        
+        # Publisher for cloudpoint
+        self.point_cloud_publisher = self.create_publisher(
+            PointCloud2,
+            'pointcloud',
+            10
+        )
+        
+        self.laser_projection = LaserProjection()
+        
     def scan_callback(self, msg):
         # Process the laser scan data here
         # Access data using msg.field_name
-        pass
+        
+        point_cloud = self.laser_projection.projectLaser(msg)
+
+        point_cloud
+
+        self.point_cloud_publisher.publish(point_cloud)
+
+        
 
 def main(args=None):
     print("Hello World!")

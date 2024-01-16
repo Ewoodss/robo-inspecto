@@ -9,7 +9,7 @@ file(GLOB xacro_files CONFIGURE_DEPENDS urdf/*.xacro)
 
 foreach(xacro_file ${xacro_files})
   get_filename_component(xacro_filename ${xacro_file} NAME_WE)
-  xacro_add_xacro_file(${xacro_file} ${CMAKE_CURRENT_BINARY_DIR}/urdf/${xacro_filename}.urdf)
+  xacro_add_xacro_file(${xacro_file} ${CMAKE_CURRENT_BINARY_DIR}/urdf/${xacro_filename}.urdf.xacro)
   list(APPEND xacro_outputs ${XACRO_OUTPUT_FILE})
 endforeach()
 

@@ -7,7 +7,7 @@ moveit_setup_assistant_config:
   package_settings:
     author_name: Ewout
     author_email: w.e.baars@student.avans.nl
-    generated_timestamp: 1704298990
+    generated_timestamp: 1705324408
   control_xacro:
     command:
       - position
