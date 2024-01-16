@@ -1,6 +1,6 @@
 moveit_setup_assistant_config:
   urdf:
-    package: robo_inspecto_launch
+    package: robo_inspecto_description
     relative_path: urdf/robot.urdf.xacro
   srdf:
     relative_path: config/macro.srdf

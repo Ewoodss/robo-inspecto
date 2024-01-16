@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.22)
-project(moveit_config)
+project(robo_inspecto_moveit_config)
 
 find_package(ament_cmake REQUIRED)
 

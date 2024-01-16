@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="macro">
     <xacro:macro name="sw_mesh_import" params="filename">
-        <mesh filename="package://robo_inspecto_launch/meshes/${filename}.STL" scale="0.001 0.001 0.001" />
+        <mesh filename="package://robo_inspecto_description/meshes/${filename}.STL" scale="0.001 0.001 0.001" />
       </xacro:macro>
     
       <xacro:macro name="sw_visual_import" params="filename length width height">

@@ -13,7 +13,7 @@
             <origin rpy="0 0 ${pi/2}" xyz="${frame_length/2} 0 0"/>
             <material name="light_grey"/>
             <geometry>
-                <mesh filename="package://robo_inspecto_launch/meshes/frame.STL" />
+                <mesh filename="package://robo_inspecto_description/meshes/frame.STL" />
             </geometry>
         </visual>
         <collision>
