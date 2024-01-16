@@ -5,25 +5,21 @@ moveit_setup_assistant_config:
   srdf:
     relative_path: config/macro.srdf
   package_settings:
-    author_name: Ewout
-    author_email: w.e.baars@student.avans.nl
-    generated_timestamp: 1705324408
+    author_name: ewout
+    author_email: we.baars@student.avans.nl
+    generated_timestamp: 1705414547
   control_xacro:
     command:
       - position
-      - effort
     state:
       - position
       - velocity
-      - effort
   modified_urdf:
     xacros:
       - control_xacro
   control_xacro:
     command:
       - position
-      - effort
     state:
       - position
       - velocity
-      - effort

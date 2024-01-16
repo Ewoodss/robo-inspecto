@@ -3,11 +3,11 @@ controller_manager:
   ros__parameters:
     update_rate: 100  # Hz
 
-    arm_controller:
+    slede_controller:
       type: joint_trajectory_controller/JointTrajectoryController
 
 
-    slede_controller:
+    arm_controller:
       type: joint_trajectory_controller/JointTrajectoryController
 
 
@@ -18,6 +18,14 @@ controller_manager:
     joint_state_broadcaster:
       type: joint_state_broadcaster/JointStateBroadcaster
 
+slede_controller:
+  ros__parameters:
+    joint: frame_to_slede
+    command_interfaces:
+      - position
+    state_interfaces:
+      - position
+      - velocity
 arm_controller:
   ros__parameters:
     joints:
@@ -27,14 +35,6 @@ arm_controller:
       - ur_wrist_1_joint
       - ur_wrist_2_joint
       - ur_wrist_3_joint
-    command_interfaces:
-      - position
-    state_interfaces:
-      - position
-      - velocity
-slede_controller:
-  ros__parameters:
-    joint: frame_to_slede
     command_interfaces:
       - position
     state_interfaces:

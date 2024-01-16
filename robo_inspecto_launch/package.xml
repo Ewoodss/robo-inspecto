@@ -12,6 +12,8 @@
   <exec_depend>ur</exec_depend>
   <exec_depend>urdf_launch</exec_depend>
 
+  <depend>robo_inspecto_hardware</depend>
+
   <build_depend>xacro</build_depend>
   <build_depend>ur_description</build_depend>
 

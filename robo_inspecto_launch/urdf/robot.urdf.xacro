@@ -16,13 +16,15 @@
         kinematics_parameters_file="$(find ur_description)/config/${robot_name}/default_kinematics.yaml"
         physical_parameters_file="$(find ur_description)/config/${robot_name}/physical_parameters.yaml"
         visual_parameters_file="$(find ur_description)/config/${robot_name}/visual_parameters.yaml"
-        script_filename=""
-        output_recipe_filename=""
-        input_recipe_filename=""
+        script_filename="$(find ur_client_library)/resources/external_control.urscript"
+        output_recipe_filename="$(find ur_robot_driver)/resources/rtde_output_recipe.txt"
+        input_recipe_filename="$(find ur_robot_driver)/resources/rtde_input_recipe.txt"
+        robot_ip="192.168.10.100"
+        reverse_ip="192.168.132"
     ><origin xyz="0 0 0" rpy="0 0 0" />
     </xacro:ur_robot>
-
-
+    
+    
     <!-- connect slede to frame -->
     <joint name="frame_to_slede" type="prismatic">
         <parent link="base_link" />
@@ -31,5 +33,4 @@
         <axis xyz="1 0 0" />
         <limit lower="0" upper="${frame_length - plate_width}" effort="100" velocity="0.5" />
     </joint>
-
 </robot>
