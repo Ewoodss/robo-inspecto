@@ -129,10 +129,6 @@ def launch_setup(context, *args, **kwargs):
 
     robot_description_semantic = {"robot_description_semantic": robot_description_semantic_content}
 
-    print(robot_description_semantic_content.perform(context))
-
-    robot_description_semantic = {"robot_description_semantic": robot_description_semantic_content}
-
     robot_description_kinematics = PathJoinSubstitution(
         [FindPackageShare("robo_inspecto_moveit_config"), "config", "kinematics.yaml"]
     )
@@ -281,28 +277,6 @@ def generate_launch_description():
             "safety_k_position",
             default_value="20",
             description="k-position factor in the safety controller.",
-        )
-    )
-    declared_arguments.append(
-        DeclareLaunchArgument(
-            "description_file",
-            default_value="ur.urdf.xacro",
-            description="URDF/XACRO description file with the robot.",
-        )
-    )
-    declared_arguments.append(
-        DeclareLaunchArgument(
-            "moveit_config_package",
-            default_value="ur_moveit_config",
-            description="MoveIt config package with robot SRDF/XACRO files. Usually the argument \
-        is not set, it enables use of a custom moveit config.",
-        )
-    )
-    declared_arguments.append(
-        DeclareLaunchArgument(
-            "moveit_config_file",
-            default_value="ur.srdf.xacro",
-            description="MoveIt SRDF/XACRO description file with the robot.",
         )
     )
     declared_arguments.append(

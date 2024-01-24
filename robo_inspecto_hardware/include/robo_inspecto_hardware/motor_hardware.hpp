@@ -17,9 +17,17 @@
 #ifndef ROBO_INSPECTO_HARDWARE__MOTOR_HARDWARE_HPP_
 #define ROBO_INSPECTO_HARDWARE__MOTOR_HARDWARE_HPP_
 
+#include <cstddef>
 #include <string>
 #include <vector>
-#include <libserial/SerialPort.h>
+
+
+//boost includes
+#include <boost/asio.hpp>
+#include <boost/bind.hpp>
+#include <boost/system/error_code.hpp>
+
+
 
 #include "hardware_interface/actuator_interface.hpp"
 #include "hardware_interface/handle.hpp"
@@ -65,7 +73,9 @@ public:
   write(const rclcpp::Time &time, const rclcpp::Duration &period) override;
 
 private:
-  LibSerial::SerialPort serialCon;
+  // LibSerial::SerialPort serialCon;
+  boost::asio::io_service io;
+  boost::asio::serial_port serialCon = boost::asio::serial_port(io);
   
   typedef struct Motor{
     double cmd = 0.0;
@@ -75,9 +85,25 @@ private:
   Motor_t motor;
 
   #define COMMAND_PREFIX ";"
-  #define READ_COMMAND ";r"
-  #define WRITE_POSITION_COMMAND ";p"
+  #define COMMAND_SUFFIX "\n"
+  #define READ_COMMAND "r"
+  #define WRITE_POSITION_COMMAND "p"
 
+
+  void writeSerial(const std::string &command);
+  bool readSerial(std::string &response);
+
+  bool convertResponseToDouble(const std::string &response, double &value);
+
+  //handler for async read
+  void handleRead(const boost::system::error_code& error, std::size_t);
+    
+
+
+  boost::system::error_code error;
+  boost::asio::streambuf responseData;
+
+  bool newSerialData = false;
 };
 
 } // namespace robo_inspecto_hardware
