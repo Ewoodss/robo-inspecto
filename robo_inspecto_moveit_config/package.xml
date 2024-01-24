@@ -43,6 +43,8 @@
   <exec_depend>tf2_ros</exec_depend>
   <exec_depend>xacro</exec_depend>
 
+  <exec_depend>robo_inspecto_hardware</exec_depend>
+
 
   <export>
       <build_type>ament_cmake</build_type>

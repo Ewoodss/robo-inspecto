@@ -24,10 +24,18 @@ target_include_directories(
 )
 ament_target_dependencies(
   robo_inspecto_hardware
+  PUBLIC
   hardware_interface
   rclcpp
   rclcpp_lifecycle
 )
+
+target_link_libraries(
+  robo_inspecto_hardware
+  PUBLIC
+  serial
+)
+
 # prevent pluginlib from using boost
 target_compile_definitions(robo_inspecto_hardware PUBLIC "PLUGINLIB__DISABLE_BOOST_FUNCTIONS")
 

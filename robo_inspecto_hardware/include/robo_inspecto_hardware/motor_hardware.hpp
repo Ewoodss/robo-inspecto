@@ -1,5 +1,6 @@
 // Copyright (c) 2024, Ewout
-// Copyright (c) 2024, Stogl Robotics Consulting UG (haftungsbeschränkt) (template)
+// Copyright (c) 2024, Stogl Robotics Consulting UG (haftungsbeschränkt)
+// (template)
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -18,55 +19,67 @@
 
 #include <string>
 #include <vector>
+#include <libserial/SerialPort.h>
 
-#include "robo_inspecto_hardware/visibility_control.h"
 #include "hardware_interface/actuator_interface.hpp"
 #include "hardware_interface/handle.hpp"
 #include "hardware_interface/hardware_info.hpp"
 #include "hardware_interface/types/hardware_interface_return_values.hpp"
 #include "rclcpp/macros.hpp"
 #include "rclcpp_lifecycle/state.hpp"
+#include "robo_inspecto_hardware/visibility_control.h"
 
-namespace robo_inspecto_hardware
-{
-class MotorHardware : public hardware_interface::ActuatorInterface
-{
+namespace robo_inspecto_hardware {
+class MotorHardware : public hardware_interface::ActuatorInterface {
 public:
   TEMPLATES__ROS2_CONTROL__VISIBILITY_PUBLIC
-  hardware_interface::CallbackReturn on_init(
-    const hardware_interface::HardwareInfo & info) override;
+  hardware_interface::CallbackReturn
+  on_init(const hardware_interface::HardwareInfo &info) override;
 
   TEMPLATES__ROS2_CONTROL__VISIBILITY_PUBLIC
-  hardware_interface::CallbackReturn on_configure(
-    const rclcpp_lifecycle::State & previous_state) override;
+  hardware_interface::CallbackReturn
+  on_configure(const rclcpp_lifecycle::State &previous_state) override;
 
   TEMPLATES__ROS2_CONTROL__VISIBILITY_PUBLIC
-  std::vector<hardware_interface::StateInterface> export_state_interfaces() override;
+  std::vector<hardware_interface::StateInterface>
+  export_state_interfaces() override;
 
   TEMPLATES__ROS2_CONTROL__VISIBILITY_PUBLIC
-  std::vector<hardware_interface::CommandInterface> export_command_interfaces() override;
+  std::vector<hardware_interface::CommandInterface>
+  export_command_interfaces() override;
 
   TEMPLATES__ROS2_CONTROL__VISIBILITY_PUBLIC
-  hardware_interface::CallbackReturn on_activate(
-    const rclcpp_lifecycle::State & previous_state) override;
+  hardware_interface::CallbackReturn
+  on_activate(const rclcpp_lifecycle::State &previous_state) override;
 
   TEMPLATES__ROS2_CONTROL__VISIBILITY_PUBLIC
-  hardware_interface::CallbackReturn on_deactivate(
-    const rclcpp_lifecycle::State & previous_state) override;
+  hardware_interface::CallbackReturn
+  on_deactivate(const rclcpp_lifecycle::State &previous_state) override;
 
   TEMPLATES__ROS2_CONTROL__VISIBILITY_PUBLIC
-  hardware_interface::return_type read(
-    const rclcpp::Time & time, const rclcpp::Duration & period) override;
+  hardware_interface::return_type read(const rclcpp::Time &time,
+                                       const rclcpp::Duration &period) override;
 
   TEMPLATES__ROS2_CONTROL__VISIBILITY_PUBLIC
-  hardware_interface::return_type write(
-    const rclcpp::Time & time, const rclcpp::Duration & period) override;
+  hardware_interface::return_type
+  write(const rclcpp::Time &time, const rclcpp::Duration &period) override;
 
 private:
-  std::vector<double> hw_commands_;
-  std::vector<double> hw_states_;
+  LibSerial::SerialPort serialCon;
+  
+  typedef struct Motor{
+    double cmd = 0.0;
+    double pos = 0.0;
+  } Motor_t;
+
+  Motor_t motor;
+
+  #define COMMAND_PREFIX ";"
+  #define READ_COMMAND ";r"
+  #define WRITE_POSITION_COMMAND ";p"
+
 };
 
-}  // namespace robo_inspecto_hardware
+} // namespace robo_inspecto_hardware
 
-#endif  // ROBO_INSPECTO_HARDWARE__MOTOR_HARDWARE_HPP_
+#endif // ROBO_INSPECTO_HARDWARE__MOTOR_HARDWARE_HPP_
